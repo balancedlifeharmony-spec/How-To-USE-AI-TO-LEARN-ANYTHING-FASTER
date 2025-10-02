@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Learning Strategies</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .badge {
+            display: inline-block;
+            background: #1e40af;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 3em;
+            color: #1e40af;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 16px;
+            border: 2px solid #3b82f6;
+            border-radius: 50px;
+            outline: none;
+        }
+        .hint {
+            margin-top: 10px;
+            color: #666;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-badge {
+            background: #1e40af;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .card p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .refs {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .refs p {
+            font-size: 12px;
+            font-weight: bold;
+            color: #92400e;
+            margin-bottom: 5px;
+        }
+        .refs a {
+            display: block;
+            font-size: 11px;
+            color: #1e40af;
+            text-decoration: none;
+            margin-bottom: 3px;
+        }
+        .result {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            display: none;
+        }
+        .result.active {
+            display: block;
+        }
+        .back-btn {
+            padding: 10px 20px;
+            background: #e5e7eb;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .prompt-box {
+            background: #dbeafe;
+            border-left: 4px solid #1e40af;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .prompt-box h3 {
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+        .prompt-box p {
+            font-style: italic;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .copy-btn {
+            padding: 12px 24px;
+            background: #1e40af;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .usage {
+            background: linear-gradient(to right, #e9d5ff, #dbeafe);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .usage ol {
+            padding-left: 20px;
+        }
+        .footer {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+        .footer a {
+            color: #764ba2;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge">How To ↘</div>
+            <h1>USE AI TO LEARN ANYTHING FASTER</h1>
+            <div class="input-group">
+                <label>What do you want to learn?</label>
+                <input type="text" id="topicInput" placeholder="e.g., Python programming, quantum physics, guitar...">
+                <p class="hint hidden" id="hint">✨ Great! Now select a strategy below</p>
+            </div>
+        </div>
+
+        <div class="grid" id="strategyGrid"></div>
+        <div class="result" id="resultView">
+            <button class="back-btn" onclick="goBack()">← Back</button>
+            <div id="resultContent"></div>
+        </div>
+
+        <div class="footer">
+            <p style="font-weight: bold; color: #1e40af; font-size: 20px;">Built by Victory Hour Multimedia Inc.</p>
+            <p style="color: #333;">🌐 <a href="https://www.victoryhourmedia.com" target="_blank">www.victoryhourmedia.com</a> | ✉️ <a href="mailto:info@victoryhourmedia.com">info@victoryhourmedia.com</a></p>
+            <p style="color: #666; font-style: italic;">We build brands that lead. From strategy to design to digital presence—your growth is our mission.</p>
+        </div>
+    </div>
+
+    <script>
+        const strategies = [
+            {
+                id: 1,
+                title: "EXPLAIN LIKE I'M 5",
+                description: "Break down tough ideas so even a kid could get it.",
+                getPrompt: (t) => `Explain ${t} as if you were talking to a 5-year-old child. Use simple language and everyday examples.`,
+                refs: [
+                    { title: "Cognitive Load Theory (Sweller, 2019)", url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6451608/" },
+                    { title: "Simplification aids retention (Chi, 1989)", url: "https://doi.org/10.1037/0033-295X.95.2.256" }
+                ]
+            },
+            {
+                id: 2,
+                title: "EXAMPLES AND ANALOGIES",
+                description: "Get real-world examples that make abstract ideas click.",
+                getPrompt: (t) => `Explain ${t} using three different real-world examples or analogies that would be easy for a beginner to understand.`,
+                refs: [
+                    { title: "Analogical reasoning (Gentner, 2003)", url: "https://doi.org/10.1207/s15516709cog1202_1" },
+                    { title: "Concrete examples (Fyfe, 2014)", url: "https://doi.org/10.1080/00461520.2011.611369" }
+                ]
+            },
+            {
+                id: 3,
+                title: "MOTIVATION",
+                description: "Get tips to keep yourself motivated about learning.",
+                getPrompt: (t) => `I'm struggling to stay motivated while learning ${t}. Provide me with 5 practical strategies to boost my motivation and maintain consistency.`,
+                refs: [
+                    { title: "Self-Determination Theory (Deci & Ryan, 2000)", url: "https://doi.org/10.1037/0033-295X.107.3.606" },
+                    { title: "Goal-setting (Locke & Latham, 2002)", url: "https://doi.org/10.1037/a0024854" }
+                ]
+            },
+            {
+                id: 4,
+                title: "ROLE-PLAY",
+                description: "Act out scenarios to practice what you've learned.",
+                getPrompt: (t) => `Let's role-play a scenario related to ${t}. Set up a realistic situation where I can practice. Begin the scenario.`,
+                refs: [
+                    { title: "Active learning (Chernikova, 2020)", url: "https://doi.org/10.1111/j.1467-8535.2009.01012.x" },
+                    { title: "Experiential learning (Kolb, 1984)", url: "https://doi.org/10.1037/0033-295X.87.4.355" }
+                ]
+            },
+            {
+                id: 5,
+                title: "STUDY PLAN",
+                description: "Map out your learning journey from start to finish.",
+                getPrompt: (t) => `Create a detailed study plan for learning ${t} over 30 days. Include specific goals, resources, and milestones.`,
+                refs: [
+                    { title: "Planning improves outcomes (Zimmerman, 2002)", url: "https://doi.org/10.1037/0033-2909.132.4.612" },
+                    { title: "Spaced repetition (Cepeda, 2006)", url: "https://doi.org/10.1016/j.learninstruc.2009.02.015" }
+                ]
+            },
+            {
+                id: 6,
+                title: "QUIZ",
+                description: "Create practice questions to test your knowledge.",
+                getPrompt: (t) => `Generate a 10-question quiz on ${t}, with multiple-choice, true/false, and short-answer questions. Include answers and explanations.`,
+                refs: [
+                    { title: "Testing effect (Roediger & Butler, 2011)", url: "https://doi.org/10.1177/1529100612453266" },
+                    { title: "Retrieval practice (Karpicke, 2008)", url: "https://doi.org/10.1037/0278-7393.32.2.268" }
+                ]
+            },
+            {
+                id: 7,
+                title: "MINDMAP",
+                description: "Sketch out your thoughts to see how everything connects.",
+                getPrompt: (t) => `Create a detailed mind map for ${t}. Include main branches, sub-branches, and key concepts.`,
+                refs: [
+                    { title: "Visual organization (Nesbit, 2006)", url: "https://doi.org/10.1016/j.cedpsych.2019.101785" },
+                    { title: "Mind mapping (Farrand, 2002)", url: "https://doi.org/10.1080/09500690601183584" }
+                ]
+            },
+            {
+                id: 8,
+                title: "EXPERT ROUNDTABLE",
+                description: "Simulate a discussion between experts.",
+                getPrompt: (t) => `Simulate a roundtable discussion with three experts about ${t}. Present different viewpoints and areas of agreement.`,
+                refs: [
+                    { title: "Multiple perspectives (Spiro, 1988)", url: "https://doi.org/10.1016/j.learninstruc.2006.05.001" },
+                    { title: "Cognitive flexibility (Jacobson, 1995)", url: "https://doi.org/10.1207/s15327809jls1203_1" }
+                ]
+            },
+            {
+                id: 9,
+                title: "MENTAL ASSOCIATIONS",
+                description: "Create memory tricks to help information stick.",
+                getPrompt: (t) => `Help me create mental associations or mnemonic devices to remember key information about ${t}.`,
+                refs: [
+                    { title: "Mnemonic techniques (Worthen, 2010)", url: "https://doi.org/10.1037/0278-7393.33.4.609" },
+                    { title: "Elaborative encoding (Craik, 2002)", url: "https://doi.org/10.1006/ceps.1999.1015" }
+                ]
+            },
+            {
+                id: 10,
+                title: "IMPROVE WHAT YOU HAVE",
+                description: "Get feedback to make your work even better.",
+                getPrompt: (t) => `I'm working on improving my understanding of ${t}. Provide specific suggestions on what to focus on, including resources and key concepts to master.`,
+                refs: [
+                    { title: "Feedback enhances learning (Hattie, 2007)", url: "https://doi.org/10.3102/0034654307313795" },
+                    { title: "Iterative refinement (Ericsson, 1993)", url: "https://doi.org/10.1037/0033-295X.108.3.624" }
+                ]
+            }
+        ];
+
+        const topicInput = document.getElementById('topicInput');
+        const hint = document.getElementById('hint');
+        const grid = document.getElementById('strategyGrid');
+        const resultView = document.getElementById('resultView');
+        const resultContent = document.getElementById('resultContent');
+
+        topicInput.addEventListener('input', () => {
+            hint.classList.toggle('hidden', !topicInput.value.trim());
+        });
+
+        function renderCards() {
+            grid.innerHTML = strategies.map(s => `
+                <div class="card" onclick="selectStrategy(${s.id})">
+                    <div class="card-badge">${s.id}. ${s.title}</div>
+                    <p>${s.description}</p>
+                    <div class="refs">
+                        <p>📚 References:</p>
+                        ${s.refs.map(r => `<a href="${r.url}" target="_blank" onclick="event.stopPropagation()">${r.title}</a>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectStrategy(id) {
+            const topic = topicInput.value.trim();
+            if (!topic) {
+                alert('Please enter a topic first!');
+                return;
+            }
+            
+            const strategy = strategies.find(s => s.id === id);
+            const prompt = strategy.getPrompt(topic);
+            
+            resultContent.innerHTML = `
+                <div class="card-badge">${strategy.id}. ${strategy.title}</div>
+                <p style="color: #666; margin: 10px 0;">${strategy.description}</p>
+                
+                <div class="prompt-box">
+                    <h3>Your Custom AI Prompt:</h3>
+                    <p id="promptText">${prompt}</p>
+                    <button class="copy-btn" onclick="copyPrompt()">📋 Copy to Clipboard</button>
+                </div>
+
+                <div class="refs" style="padding: 20px; margin: 20px 0;">
+                    <p style="font-size: 16px; margin-bottom: 10px;">📚 Scientific References:</p>
+                    ${strategy.refs.map(r => `<a href="${r.url}" target="_blank" style="font-size: 14px; margin: 8px 0;">• ${r.title}</a>`).join('')}
+                </div>
+
+                <div class="usage">
+                    <h3 style="margin-bottom: 10px;">💡 How to Use:</h3>
+                    <ol>
+                        <li>Copy the prompt above</li>
+                        <li>Paste into ChatGPT, Claude, or any AI assistant</li>
+                        <li>Review and ask follow-up questions</li>
+                        <li>Apply what you learn!</li>
+                    </ol>
+                </div>
+            `;
+            
+            grid.style.display = 'none';
+            resultView.classList.add('active');
+        }
+
+        function copyPrompt() {
+            const text = document.getElementById('promptText').textContent;
+            navigator.clipboard.writeText(text);
+            alert('Copied to clipboard!');
+        }
+
+        function goBack() {
+            grid.style.display = 'grid';
+            resultView.classList.remove('active');
+        }
+
+        renderCards();
+    </script>
+</body>
+</html>
